@@ -6,6 +6,7 @@ import "hardhat/console.sol";
 
 contract shahToken is ERC20{
 
+    address owner;
     //This acts as a storage to keep all records of balance.
     mapping(address => uint) public balancesOf;
     mapping(address => mapping(address => uint)) public allowances;
@@ -13,7 +14,7 @@ contract shahToken is ERC20{
     uint public _totalSupply = 10000000 *(10**10);
 
     constructor() ERC20("SHAHToken", "SHA"){
-        address owner = msg.sender;
+        owner = msg.sender;
         balancesOf[owner] = _totalSupply;
     }
 
@@ -34,17 +35,17 @@ contract shahToken is ERC20{
 
     //This allows the creator to send tokens.
     function transfer(address _to, uint _value) public override returns(bool sucess){
-        require(_value <= balancesOf[msg.sender]);
-        balancesOf[msg.sender] -= _value;
+        require(_value <= balancesOf[owner]);
+        balancesOf[owner] -= _value;
         balancesOf[_to] += _value;
-        emit Transfer(msg.sender, _to, _value);
+        emit Transfer(owner, _to, _value);
         return true;
     }
 
     //This allows an account to use tokens.
     function approve(address _spender, uint _value) public override returns(bool sucess){
-        allowances[msg.sender][_spender] = _value;
-        emit Approval(msg.sender, _spender, _value);
+        allowances[owner][_spender] = _value;
+        emit Approval(owner, _spender, _value);
         return true;
     }
 
@@ -56,10 +57,10 @@ contract shahToken is ERC20{
     //This allows third party user to send tokens to the someone. if they are allowed.
     function transferFrom(address _from, address _to, uint _value) public override returns(bool sucess){
         require(_value <= balancesOf[_from]);
-        require(_value <= allowances[_from][msg.sender]);
+        require(_value <= allowances[_from][owner]);
         balancesOf[_from] -= _value;
         balancesOf[_to] += _value;
-        allowances[_from][msg.sender] -= _value;
+        allowances[_from][owner] -= _value;
         emit Transfer(_from, _to, _value);
         return true;
     }

@@ -1,12 +1,21 @@
-type ExampleEntity @entity {
-  id: ID!
-  count: BigInt!
-  owner: Bytes! # address
-  spender: Bytes! # address
+# type ExampleEntity @entity {
+#   id: ID!
+#   count: BigInt!
+#   owner: Bytes! # address
+#   spender: Bytes! # address
+# }
+
+
+type transfer @entity{
+  id:ID!
+  owner:Bytes!
+  _to:Bytes!
+  _value:BigInt!
 }
-type mint @entity {
-  _totalSupply:BigInt! 
-}
-type checkBalance @entity {
-  
+
+type approval @entity{
+  id:ID!
+  owner:Bytes!
+  _spender:Bytes!
+  _value:BigInt!
 }

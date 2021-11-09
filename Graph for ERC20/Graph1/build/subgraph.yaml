@@ -8,6 +8,7 @@ dataSources:
     source:
       address: "0x15e3625a2b7cC46f29068A6658AD97F8ee190D8f"
       abi: Contract
+      startBlock: 9594255
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -15,6 +16,9 @@ dataSources:
       entities:
         - Approval
         - Transfer
+        - Mint
+        - transfer
+        - approval
       abis:
         - name: Contract
           file: Contract\abis\Contract.json
